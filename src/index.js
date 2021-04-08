@@ -3,10 +3,18 @@ import { View, SafeAreaView, FlatList, Text, StyleSheet, StatusBar } from 'react
 import api from './services/api';
 
 export default function App(){
-    //const [ projects, setProjects ] = useState([]);
+    const [ projects, setProjects ] = useState([]);
 
+    useEffect(() => {
+        api.get('http://10.0.2.2:3333/projects').then(response => {
+            // console.log(response.data); 
+            // console.log(api.baseUrl);
+            setProjects(response.data);
+        });
+    },[]);
+    
     // useEffect(() => {
-    //     api.get('projects').then(response => {
+    //     api.get('/projects').then(response => {
     //         // console.log(response.data); 
     //         setProjects(response.data);
     //     });
@@ -25,10 +33,10 @@ export default function App(){
                     )}
                 </FlatList>
             </SafeAreaView> */}
-
+ 
             <View style={styles.container}>
-                {/* {projects.map(project => <Text key={project.id} style={styles.project}>{project.title}</Text>)} */}
-                <Text style={styles.project}>Isso é um teste</Text>
+                {projects.map(project => <Text key={project.id} style={styles.project}>{project.title}</Text>)}
+                <Text style={styles.project}>Fim da lista</Text>
             </View>
         </>
     );
